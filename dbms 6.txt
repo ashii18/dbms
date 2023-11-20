@@ -1,0 +1,48 @@
+import mysql.connector
+
+# Establish MySQL database connection
+mydb = mysql.connector.connect(
+    host="your_host",
+    user="your_username",
+    password="your_password",
+    database="your_database"
+)
+
+# Create cursor object to interact with the database
+cursor = mydb.cursor()
+
+# Function to add data
+def add_data(name, age):
+    sql = "INSERT INTO users (name, age) VALUES (%s, %s)"
+    val = (name, age)
+    cursor.execute(sql, val)
+    mydb.commit()
+    print(cursor.rowcount, "record inserted.")
+
+# Function to delete data
+def delete_data(user_id):
+    sql = "DELETE FROM users WHERE id = %s"
+    val = (user_id,)
+    cursor.execute(sql, val)
+    mydb.commit()
+    print(cursor.rowcount, "record(s) deleted.")
+
+# Function to update data
+def update_data(user_id, new_age):
+    sql = "UPDATE users SET age = %s WHERE id = %s"
+    val = (new_age, user_id)
+    cursor.execute(sql, val)
+    mydb.commit()
+    print(cursor.rowcount, "record(s) updated.")
+
+# Add data
+add_data("Alice", 25)
+
+# Delete data
+delete_data(1)
+
+# Update data
+update_data(2, 30)
+
+# Close the connection
+mydb.close()

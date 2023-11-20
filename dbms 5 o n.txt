@@ -1,0 +1,55 @@
+CREATE DATABASE zomato;
+-- Use database zomato
+USE zomato;
+
+-- Create table o_rollcall
+CREATE TABLE o_rollcall (
+    rollno INT,
+    name VARCHAR(30),
+    address VARCHAR(89)
+);
+
+-- Create table n_rollcall
+CREATE TABLE n_rollcall (
+    rollno INT,
+    name VARCHAR(30),
+    address VARCHAR(89)
+);
+-- Insert data into o_rollcall
+INSERT INTO o_rollcall VALUES (39, "me", "pune"), (23, "jf", "mumbai"), (87, "ig", "jhgf");
+-- Select data from o_rollcall
+SELECT * FROM o_rollcall;
+-- Select data from n_rollcall
+SELECT * FROM n_rollcall;
+-- Set delimiter for the stored procedure
+DELIMITER $$
+
+-- Create stored procedure p_cursor
+CREATE PROCEDURE p_cursor (IN rl INT)
+BEGIN
+    DECLARE r2 INT;
+    DECLARE exit_loop BOOLEAN;
+    DECLARE c1 CURSOR FOR SELECT rollno FROM o_rollcall WHERE rollno > rl;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET exit_loop = TRUE;
+
+    OPEN c1;
+    e_loop: LOOP
+        FETCH c1 INTO r2;
+        IF NOT EXISTS (SELECT * FROM n_rollcall WHERE rollno = r2) THEN
+            INSERT INTO n_rollcall SELECT * FROM o_rollcall WHERE rollno = r2;
+        END IF;
+
+        IF exit_loop THEN
+            CLOSE c1;
+            LEAVE e_loop;
+        END IF;
+    END LOOP e_loop;
+END$$
+
+-- Reset delimiter to default
+DELIMITER ;
+
+-- Call stored procedure p_cursor
+CALL zomato.p_cursor(39);
+-- Select data from n_rollcall after calling the stored procedure
+SELECT * FROM n_rollcall;

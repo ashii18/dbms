@@ -1,0 +1,56 @@
+CREATE DATABASE doms;
+USE doms;
+
+CREATE TABLE borrower (
+    rollno INT,
+    name VARCHAR(10),
+    dateofissue DATE,
+    namebook VARCHAR(20),
+    status VARCHAR(2)
+);
+
+CREATE TABLE fine (
+    rollno INT,
+    day INT,
+    amt INT
+);
+INSERT INTO borrower VALUES(1, "rutu", "2021-09-03", "wt", "i");
+INSERT INTO borrower VALUES(2, "raj", "2022-09-03", "ai", "i");
+INSERT INTO borrower VALUES(7, "ram", "2023-07-03", "cn", "i");
+DELIMITER $$
+CREATE PROCEDURE ram(IN roll INT, IN bookname VARCHAR(20))
+BEGIN
+    DECLARE noofdays INT;
+    DECLARE fineamount INT;
+    DECLARE issuedate DATE;
+    
+    SET fineamount := 0;
+
+    SELECT dateofissue INTO issuedate FROM borrower WHERE rollno = roll AND namebook = bookname;
+    SELECT issuedate;
+
+    SELECT DATEDIFF(CURDATE(), issuedate) INTO noofdays FROM borrower WHERE rollno = roll;
+    SELECT noofdays;
+
+    IF noofdays >= 15 AND noofdays <= 30 THEN
+        SET fineamount := -noofdays * 5;
+    ELSEIF noofdays > 30 THEN
+        SET fineamount := -noofdays * 50;
+    END IF;
+
+    UPDATE borrower SET status = "y" WHERE rollno = roll;
+
+    IF fineamount >= 0 THEN
+        INSERT INTO fine VALUES (roll, noofdays, fineamount);
+    ELSEIF fineamount < 0 THEN
+        BEGIN
+            DECLARE exit handler FOR SQLEXCEPTION
+            SELECT 'table not found';
+            SELECT * FROM borrower;
+        END;
+    END IF;
+END $$
+DELIMITER ;
+CALL ram(1, "wt");
+SELECT * FROM borrower;
+SELECT * FROM fine;

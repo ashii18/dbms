@@ -1,0 +1,47 @@
+// 1) Show databases
+show dbs;
+ 
+// 2) Use library
+use library;
+ 
+// 3) Create collection "books"
+db.createCollection("books");
+ 
+// 4) Insert one document into "books"
+db.books.insertOne({ "bid": 1, "name": "rur" });
+ 
+// 5) Insert one document into "books"
+db.books.insertOne({ "bid": 2, "name": "shrni" });
+ 
+// 6) Find all documents in "books"
+db.books.find();
+ 
+// 7) Find all documents in "books" and pretty print
+db.books.find().pretty();
+ 
+// 8) Update document in "books"
+db.books.update({ "name": "rur" }, { $set: { "name": "radhakrishn" } });
+ 
+// 9) Remove document from "books"
+db.books.remove({ "bid": 1 });
+ 
+// 10) Find documents in "books" with name "shrni"
+db.books.find({ "name": "shrni" });
+ 
+// 11) Find documents in "books" with name greater than or equal to "shrni"
+db.books.find({ "name": { $gte: "shrni" } });
+ 
+// 12) Insert multiple documents into "books"
+db.books.insertMany([
+    { "bid": 2, "name": "shrni" },
+    { "bid": 5, "name": "raj" }
+]);
+ 
+// 13) Save document into "books"
+db.books.save({ "_id": 123, "name": "bhagvadgita" });
+ 
+// 14) Delete one document from "books"
+db.books.deleteOne({ "bid": 2, "name": "shrni" });
+ 
+// 15) Find all documents in "books"
+db.books.find();

@@ -1,0 +1,82 @@
+-- 1) Create database college;
+CREATE DATABASE college;
+ 
+-- 2) Use college;
+USE college;
+ 
+-- 3) Create table classA(fname varchar(20), lname varchar(20), age int, marks int);
+CREATE TABLE classA (
+    fname VARCHAR(20),
+    lname VARCHAR(20),
+    age INT,
+    marks INT
+);
+ 
+-- 4) Create table classB(fname varchar(20), lname varchar(20), age int, marks int);
+CREATE TABLE classB (
+    fname VARCHAR(20),
+    lname VARCHAR(20),
+    age INT,
+    marks INT
+);
+ 
+-- 5) Describe classA;
+DESC classA;
+ 
+-- 6) Describe classB;
+DESC classB;
+ 
+-- 7) INSERT INTO classA VALUES ("ru", "yewale", 19, 99), ("raj", "bhosale", 20, 99);
+INSERT INTO classA VALUES ("ru", "yewale", 19, 99), ("raj", "bhosale", 20, 99);
+ 
+-- 8) INSERT INTO classB VALUES ("nishu", "abc", 1, 98), ("shrutu", "xyz", 1, 98);
+INSERT INTO classB VALUES ("nishu", "abc", 1, 98), ("shrutu", "xyz", 1, 98);
+ 
+-- 9) SELECT * FROM classA;
+SELECT * FROM classA;
+ 
+-- 10) SELECT * FROM classB;
+SELECT * FROM classB;
+ 
+-- 11) INSERT INTO classA(fname, lname) VALUES ("priti", "tug"), ("viraj", "gfd");
+INSERT INTO classA (fname, lname) VALUES ("priti", "tug"), ("viraj", "gfd");
+ 
+-- 12) INSERT INTO classA SELECT * FROM classB;
+INSERT INTO classA SELECT * FROM classB;
+ 
+-- 13) UPDATE classB SET age = 2 WHERE age = 1;
+UPDATE classB SET age = 2 WHERE age = 1;
+ 
+-- 14) UPDATE classB SET fname = "ruturaj" WHERE marks > 95;
+UPDATE classB SET fname = "ruturaj" WHERE marks > 95;
+ 
+-- 15) DELETE FROM classA WHERE age = 19;
+DELETE FROM classA WHERE age = 19;
+ 
+-- 16) DELETE FROM classA WHERE marks = 99;
+DELETE FROM classA WHERE marks = 99;
+ 
+-- 17) CREATE TABLE sa (salary INT);
+CREATE TABLE sa (
+    salary INT
+);
+ 
+-- 18) INSERT INTO sa VALUES (89000), (8654), (74568), (67000);
+INSERT INTO sa VALUES (89000), (8654), (74568), (67000);
+ 
+-- 19) SELECT * FROM sa WHERE salary > 10000;
+SELECT * FROM sa WHERE salary > 10000;
+ 
+-- 20) SELECT MAX(salary) FROM sa;
+SELECT MAX(salary) FROM sa;
+ 
+-- 21) SELECT MIN(salary) FROM sa;
+SELECT MIN(salary) FROM sa;
+ 
+-- 22) SELECT COUNT(salary) FROM sa;
+SELECT COUNT(salary) FROM sa;
+ 
+-- 23) SELECT areas labye so separately make that query in same table that created firstly;
+-- Assuming you meant to select all columns from the "sa" table
+SELECT * FROM sa;
+ 

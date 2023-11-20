@@ -1,0 +1,60 @@
+CREATE DATABASE a;
+USE a;
+
+-- Create tables
+CREATE TABLE customers (
+    id INT,
+    name VARCHAR(20),
+    food VARCHAR(20)
+);
+
+CREATE TABLE orders (
+    id INT,
+    food VARCHAR(20),
+    price INT
+);
+
+-- Insert values into tables
+INSERT INTO customers (id, name, food) VALUES
+(1, 'John', 'Pizza'),
+(2, 'Jane', 'Burger'),
+(3, 'Alice', 'Sushi');
+
+INSERT INTO orders (id, food, price) VALUES
+(1, 'Pizza', 10),
+(3, 'Sushi', 15),
+(4, 'Steak', 20); -- Adding an order with id 4 that does not have a corresponding customer
+
+-- Different types of joins
+SELECT * FROM customers INNER JOIN orders ON customers.id = orders.id;
+SELECT * FROM customers LEFT JOIN orders ON customers.id = orders.id;
+SELECT * FROM customers RIGHT JOIN orders ON customers.id = orders.id;
+SELECT * FROM customers LEFT JOIN orders ON customers.id = orders.id
+UNION
+SELECT * FROM customers RIGHT JOIN orders ON customers.id = orders.id
+WHERE customers.id IS NULL;
+
+-- 7) Aggregate function (AVG)
+SELECT AVG(price) FROM orders;
+
+-- 8) Subquery with WHERE
+SELECT * FROM orders WHERE price > (SELECT AVG(price) FROM orders);
+
+-- 9) Subquery with WHERE and MAX
+SELECT * FROM orders WHERE price < (SELECT MAX(price) FROM orders);
+
+-- 10) Subquery with IN
+SELECT * FROM orders WHERE id IN (SELECT id FROM customers);
+-- 11) CREATE VIEW
+CREATE VIEW v2 AS SELECT id, name FROM customers;
+
+-- 12) SELECT from View
+SELECT * FROM v2;
+
+-- 13) UPDATE in View
+UPDATE v2 SET name = 'shru' WHERE name = 'john';
+
+-- 14) SELECT from View after UPDATE
+SELECT * FROM v2;
+-- 15) DROP VIEW
+DROP VIEW v2;
